@@ -20,8 +20,8 @@ app.post('/signedrequest', function(req, res) {
         instanceUrl = signedRequest.client.instanceUrl,
 
         query = "SELECT Id, FirstName, LastName, Phone, Email FROM Contact WHERE Id = '" + context.environment.record.Id + "'";
-        console.log(oauthToken)
-        console.log(context.environment.record.Id);
+        //console.log(oauthToken)
+        //console.log(context.environment.record.Id);
         const contactRequest = {
             url: instanceUrl + '/services/data/v59.0/query?q=' + query,
             headers: {
