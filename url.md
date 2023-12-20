@@ -1,1 +1,0 @@
-https://ccoenraets.github.io/salesforce-developer-advanced/Using-Canvas.html

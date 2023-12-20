@@ -1,8 +1,0 @@
-{
-    "name": "Canvas Demo",
-    "description": "Salesforce Canvas Demo",
-    "env": {
-        "CONSUMER_SECRET": "7EA1B713786B319BEBE18F2C375B9208F077404AA35D4C30301AC1C0D3E688C7",
-        "CLIENTID": "3MVG9vp1McGXQBYGcnDR0UfAip4mcmuGTMZYyDQN73qHKFxNFQDHTjM83oaGVEaoMLBpYgJOdcXsfRQTujc8V"
-    }
-}
