@@ -29,7 +29,7 @@ app.post('/signedrequest', function(req, res) {
             }
         };
 
-        console.log(contactRequest);
+        // console.log(contactRequest);
 
     request(contactRequest, function(err, response, body) {
         let qr = qrcode.qrcode(4, 'L'),
