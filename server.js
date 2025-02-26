@@ -28,6 +28,7 @@ app.post("/signedrequest", async (req, res) => {
     });
 
     const contact = contactResponse.data.records[0];
+    console.log(JSON.stringify(contact, null, 2));
 
     if (!contact) {
       return res.status(404).send("Contact not found");
