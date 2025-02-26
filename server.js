@@ -8,7 +8,8 @@ const app = express();
 const consumerSecret = process.env.CONSUMER_SECRET;
 
 app.set("view engine", "ejs");
-app.use(bodyParser.urlencoded({ extended: true })); // Proper middleware usage
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(express.static(__dirname + "/public"));
 
 app.post("/signedrequest", async (req, res) => {
@@ -20,7 +21,7 @@ app.post("/signedrequest", async (req, res) => {
 
     const query = `SELECT Id, FirstName, LastName, Phone, Email FROM Contact WHERE Id = '${context.environment.record.Id}'`;
 
-    // Make request using axios
+    // Make Salesforce API request
     const contactResponse = await axios.get(`${instanceUrl}/services/data/v59.0/query?q=${query}`, {
       headers: {
         Authorization: `OAuth ${oauthToken}`,
@@ -28,23 +29,23 @@ app.post("/signedrequest", async (req, res) => {
     });
 
     const contact = contactResponse.data.records[0];
-    console.log(JSON.stringify(contact, null, 2));
 
     if (!contact) {
       return res.status(404).send("Contact not found");
     }
 
     // Generate QR Code data
-    const text = `MECARD:N:${contact.LastName},${contact.FirstName};TEL:${contact.Phone};EMAIL:${contact.Email};;`;
+    const qrText = `MECARD:N:${contact.LastName},${contact.FirstName};TEL:${contact.Phone};EMAIL:${contact.Email};;`;
 
     // Generate QR Code as a Data URL
-    QRCode.toDataURL(text, (err, url) => {
+    QRCode.toDataURL(qrText, (err, qrUrl) => {
       if (err) {
         console.error("QR Code generation failed:", err);
         return res.status(500).send("Error generating QR Code");
       }
 
-      res.render("index", { context: context, imgTag: `<img src="${url}"/>` });
+      // Pass the QR code image tag to EJS
+      res.render("index", { context: context, imgTag: `<img src="${qrUrl}" alt="QR Code"/>` });
     });
   } catch (error) {
     console.error("Error processing request:", error);
