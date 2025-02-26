@@ -5,42 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen p-6">
-    <div class="bg-white shadow-lg rounded-lg p-6 w-full max-w-3xl">
-        <h2 class="text-2xl font-bold mb-6 text-center">Salesforce Contact:</h2>
-        <h3 class="text-lg font-semibold mb-4">QR Code</h3>
-        <div class="border border-gray-300 p-2 shadow-lg rounded-lg">
+<body class="bg-gray-100 flex flex-col items-center justify-start min-h-screen overflow-auto p-6">
+    <div class="bg-white shadow-lg rounded-lg p-6 w-full max-w-md">
+        <h2 class="text-2xl font-bold mb-4 text-center">Salesforce Contact</h2>
+        
+        <table class="w-full border-collapse border border-gray-300">
+            <tr class="bg-gray-200">
+                <td class="border border-gray-300 p-2 font-semibold">User:</td>
+                <td class="border border-gray-300 p-2"><%= context.user.fullName %></td>
+            </tr>
+            <tr>
+                <td class="border border-gray-300 p-2 font-semibold">Object:</td>
+                <td class="border border-gray-300 p-2"><%= context.environment.record.attributes.type %></td>
+            </tr>
+            <tr class="bg-gray-200">
+                <td class="border border-gray-300 p-2 font-semibold">Id:</td>
+                <td class="border border-gray-300 p-2"><%= context.environment.record.Id %></td>
+            </tr>
+        </table>
+
+        <h3 class="text-lg font-semibold mt-4 text-center">QR Code for this Contact</h3>
+        <div class="flex justify-center mt-4">
             <%- imgTag %>
         </div>
-
-        <!-- 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-                <table class="w-full border-collapse border border-gray-300">
-                    <tr class="bg-gray-200">
-                        <td class="border border-gray-300 p-2 font-semibold">User:</td>
-                        <td class="border border-gray-300 p-2"><%= context.user.fullName %></td>
-                    </tr>
-                    <tr>
-                        <td class="border border-gray-300 p-2 font-semibold">Object:</td>
-                        <td class="border border-gray-300 p-2"><%= context.environment.record.attributes.type %></td>
-                    </tr>
-                    <tr class="bg-gray-200">
-                        <td class="border border-gray-300 p-2 font-semibold">Id:</td>
-                        <td class="border border-gray-300 p-2"><%= context.environment.record.Id %></td>
-                    </tr>
-                </table>
-         
-            </div>
-
-        
-            <div class="flex flex-col items-center justify-center">
-                <h3 class="text-lg font-semibold mb-4">QR Code</h3>
-                <div class="border border-gray-300 p-2 shadow-lg rounded-lg">
-                    <%- imgTag %>
-                </div>
-            </div>
-        </div> -->
     </div>
 </body>
 </html>
