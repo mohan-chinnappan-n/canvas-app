@@ -21,7 +21,7 @@ app.post("/signedrequest", async (req, res) => {
 
     const query = `SELECT Id, FirstName, LastName, Phone, Email FROM Contact WHERE Id = '${context.environment.record.Id}'`;
 
-    // Make Salesforce API request
+    // Fetch contact details from Salesforce
     const contactResponse = await axios.get(`${instanceUrl}/services/data/v59.0/query?q=${query}`, {
       headers: {
         Authorization: `OAuth ${oauthToken}`,
@@ -34,18 +34,19 @@ app.post("/signedrequest", async (req, res) => {
       return res.status(404).send("Contact not found");
     }
 
-    // Generate QR Code data
-    const qrText = `MECARD:N:${contact.LastName},${contact.FirstName};TEL:${contact.Phone};EMAIL:${contact.Email};;`;
-
     // Generate QR Code as a Data URL
+    const qrText = `MECARD:N:${contact.LastName},${contact.FirstName};TEL:${contact.Phone};EMAIL:${contact.Email};;`;
+    
     QRCode.toDataURL(qrText, (err, qrUrl) => {
       if (err) {
         console.error("QR Code generation failed:", err);
         return res.status(500).send("Error generating QR Code");
       }
 
-      // Pass the QR code image tag to EJS
-      res.render("index", { context: context, imgTag: `<img src="${qrUrl}" alt="QR Code"/>` });
+      // Ensure imgTag contains a valid image
+      const imgTag = `<img src="${qrUrl}" alt="QR Code" class="w-40 h-40 mx-auto border border-gray-300 shadow-lg"/>`;
+
+      res.render("index", { context: context, imgTag: imgTag });
     });
   } catch (error) {
     console.error("Error processing request:", error);
