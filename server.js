@@ -4,6 +4,8 @@ const express = require("express"),
   qrcode = require("qrcode-npm"),
   decode = require("salesforce-signed-request");
 
+  // qrc app
+
 const consumerSecret = process.env.CONSUMER_SECRET;
 
 app = express();
